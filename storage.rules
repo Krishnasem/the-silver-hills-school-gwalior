@@ -1,0 +1,56 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper: checks whether user is logged in via Firebase Auth
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Public Media: Intro videos & School Tour
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isSignedIn()
+                   && request.resource.size < 60 * 1024 * 1024
+                   && request.resource.contentType.matches('video/.*');
+    }
+
+    // Public Media: Gallery Photos
+    match /gallery/{photoId} {
+      allow read: if true;
+      allow write: if isSignedIn()
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Public Documents: Timetables, Results, Circulars & Notices
+    match /documents/{category}/{documentId} {
+      allow read: if true;
+      allow write: if isSignedIn()
+                   && request.resource.size < 25 * 1024 * 1024
+                   && (request.resource.contentType == 'application/pdf' || request.resource.contentType.matches('application/.*'));
+    }
+
+    // Public Media: School Activity Video Reels
+    match /activities/{reelId} {
+      allow read: if true;
+      allow write: if isSignedIn()
+                   && request.resource.size < 50 * 1024 * 1024
+                   && request.resource.contentType.matches('video/.*');
+    }
+
+    // Public Media: Teacher Profile Photos
+    match /teachers/{teacherId} {
+      allow read: if true;
+      allow write: if isSignedIn()
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Fallback: authenticated write, public read for any public assets
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+  }
+}

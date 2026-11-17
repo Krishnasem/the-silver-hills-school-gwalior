@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // User profiles
+    match /userProfiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Publicly accessible school academic documents (timetables, results, syllabi)
+    // Anyone can read and download; only signed-in staff can create, update, or delete
+    match /academicDocuments/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Daily thoughts and school announcements
+    match /schoolContent/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Functions, events and gallery photos
+    match /galleryPhotos/{photoId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Public contact inquiries
+    match /contactInquiries/{inquiryId} {
+      allow create: if true;
+      allow read, update, delete: if isSignedIn();
+    }
+  }
+}

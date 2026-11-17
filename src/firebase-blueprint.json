@@ -1,0 +1,55 @@
+{
+  "entities": {
+    "userProfiles": {
+      "fields": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "academicDocuments": {
+      "fields": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "classGrade": { "type": "string" },
+        "description": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "term": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "string" },
+        "fileDataUrl": { "type": "string" },
+        "downloadUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "uploadDate": { "type": "string" },
+        "downloadCount": { "type": "number" },
+        "uploadedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "schoolContent": {
+      "fields": {
+        "noticeText": { "type": "string" },
+        "noticeDate": { "type": "string" },
+        "thoughtText": { "type": "string" },
+        "thoughtAuthor": { "type": "string" },
+        "thoughtContext": { "type": "string" },
+        "introVideoUrl": { "type": "string" },
+        "introVideoStoragePath": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "galleryPhotos": {
+      "fields": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "downloadUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "date": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    }
+  }
+}
